@@ -1,0 +1,76 @@
+.t-nav{
+    background-color:#19283f;
+}
+.nav-item{
+    font-weight: bold;
+    margin-right: 10px;
+    border-radius: 15px;
+
+}
+.nav-link:hover {
+    color: #fff !important;
+    transition-delay: .2s;
+    background-color: #0275d8;
+    border-radius: 15px !important;
+
+}
+.dropdown-menu{
+    background-color:#19283f !important; 
+}
+.dropdown-item:hover,.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link
+{
+    color: #fff !important;
+    transition-delay: .2s;
+    background-color: #0275d8;
+    border-radius: 15px;
+
+
+}
+.nav-link,.dropdown-item{
+/*    color: #f7582d !important;*/
+
+        font-weight: bold;
+    color: #fff !important;
+    
+   
+}
+
+
+.t-bannertext{
+    line-height: 200%;
+}
+.t-shad{
+    color: #777777;
+}
+.t-shad1{
+   color: #b9c7cd;
+    font-size: 13px;
+}
+.t-btn{
+    border-width: 3px;
+    border-radius: 20px;
+}
+.t-bg1{
+    background-color: #F4F4F4;
+}
+.t-bg2{
+    background-color: #19283f;
+}
+.t-btn3{
+    color: #ffb10c;
+    background-color:#ff3150;
+    border-radius: 50px;
+    
+}
+.t-name{
+    color: #00c7c0 !important;
+}
+.t-head{
+    margin-top: 25%;
+}
+.t-ConsultDate{
+    font-size: 15px;
+    background-color: lawngreen;
+    color: darkgreen;
+    
+}
