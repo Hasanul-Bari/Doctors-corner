@@ -70,18 +70,22 @@
                 
                 <?php 
                       if(isset($_SESSION['patient'])){
-                          echo '<li class="nav-item dropdown">';
-                          echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                          echo '<img src="img/profile.png" class="img-fluid" alt="">&nbsp;'.htmlentities($pt['Name']).'</a>';
-                          echo '<div class="dropdown-menu" aria-labelledby="navbarDropdown">';
-                          echo '<a class="dropdown-item" href="PatientProfile.php">Profile</a>';
-                          echo '<a class="dropdown-item" href="logout.php">Logout</a>';
-                          echo '</div></li>';
+                        ?>
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?=htmlentities($pt['Name'])?> </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="PatientProfile.php">Profile</a>
+                            <a class="dropdown-item" href="logout.php">Logout</a>
+                            </div></li>
+                        <?php  
                       }
                       else{
-                          echo '<li class="nav-item">';
-                            echo '<a class="nav-link" href="signin.php">Sign in</a>';
-                          echo '</li>';
+                        ?>
+                            <li class="nav-item">
+                              <a class="nav-link" href="signin.php">Sign in</a>
+                            </li>
+                        <?php 
                       }
                 
                  ?>
