@@ -16,7 +16,7 @@
 
 
 
-    <title>AdminPanel</title>
+    <title>AdminPanel-Add Department</title>
   </head>
   <body>
 
@@ -77,39 +77,27 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-5 mt-5">
-                <button type="button" class="btn btn-primary">Doctor List</button>
-                <a href="AdminAddDoc.html"><button type="button" class="btn btn-success">Add Doctor</button></a>
-                <a href="AdminAddDept.html"><button type="button" class="btn btn-success">Add Department</button></a>
-                
-                
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-center text-primary">
+                <h3>Add Department</h3>
             </div>
-            <div class="col-md-5">
-                <div class="row mt-2">
-                         <div class="col-md-1"></div>
-                         <div class="col-md-10 text-center">
-                             <h3>Details</h3>
-                         </div>
-                         <div class="col-md-1"></div>
-                     </div>
-                     <div class="row border border-dark rounded my-3">
-                         <div class="col-md-1"></div>
-                         <div class="col-md-10 py-3">
-                             <h4>Admin's Name : Donald Trump </h4>
-                             <h5>Contact : 01781XXXXXX</h5>
-                             <h5>Email : tanverlikhon@gmail.com</h5>
-                             
-                            
-                             <button type="button" class="btn btn-primary">Edit Profile</button>
-                             
-                            
-                         </div>
-                         <div class="col-md-1"></div>
-                     </div>
-            </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-3"></div>
         </div>
+           <div class="row my-3">
+             <div class="col-md-3"></div>
+             <div class="col-md-6 py-3 border border-dark rounded">
+                 <form>
+                   <div class="form-group">
+                    <label for="DeptName">Name of the Department</label>
+                    <input type="text" class="form-control" id="DocName" aria-describedby="emailHelp">
+                  </div>
+
+                  <button type="submit" class="btn btn-success mt-2">Add</button>
+                </form>
+             </div>
+             <div class="col-md-3"></div>
+         </div>
+                        
     </div>
 </section>
 
