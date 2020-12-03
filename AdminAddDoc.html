@@ -16,7 +16,7 @@
 
 
 
-    <title>AdminPanel</title>
+    <title>AdminPanel-Add Doctor</title>
   </head>
   <body>
 
@@ -75,46 +75,105 @@
 <!--  NavBar-->
 
 <section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-5 mt-5">
-                <button type="button" class="btn btn-primary">Doctor List</button>
-                <a href="AdminAddDoc.html"><button type="button" class="btn btn-success">Add Doctor</button></a>
-                <a href="AdminAddDept.html"><button type="button" class="btn btn-success">Add Department</button></a>
-                
-                
-            </div>
-            <div class="col-md-5">
-                <div class="row mt-2">
+         <div class="container">
+             <div class="row mt-3">
+                <div class="col-md-3"></div>
+                 <div class="col-md-6">
+                     <div class="row">
                          <div class="col-md-1"></div>
                          <div class="col-md-10 text-center">
-                             <h3>Details</h3>
+                             <h3>Add Doctor</h3>
                          </div>
                          <div class="col-md-1"></div>
                      </div>
                      <div class="row border border-dark rounded my-3">
                          <div class="col-md-1"></div>
                          <div class="col-md-10 py-3">
-                             <h4>Admin's Name : Donald Trump </h4>
-                             <h5>Contact : 01781XXXXXX</h5>
-                             <h5>Email : tanverlikhon@gmail.com</h5>
-                             
-                            
-                             <button type="button" class="btn btn-primary">Edit Profile</button>
-                             
-                            
+                             <form>
+                               <div class="form-group">
+                                <label for="DocName">Name of the Doctor</label>
+                                <input type="text" class="form-control" id="DocName" aria-describedby="emailHelp">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
+                              </div>
+                              <select class="form-control form-control-sm">
+                                  <option>Select Department</option>
+                                </select>
+                                
+                                <p class="mt-3">Qualifications</p>
+                                
+                                <div class="input-group">
+<!--                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">With textarea</span>
+                                  </div>-->
+                                  <textarea class="form-control" aria-label="With textarea"></textarea>
+                                </div>
+                                
+                                
+                                
+                                <p class="mt-3">Select Consultation Dates</p>
+                                
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                  <label class="form-check-label" for="defaultCheckSaturday">
+                                   Saturday
+                                  </label>
+                                </div>
+                                 <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                  <label class="form-check-label" for="defaultCheckSunday">
+                                    Sunday
+                                  </label>
+                                </div>
+                                 <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                  <label class="form-check-label" for="defaultCheckMonday">
+                                    Monday
+                                  </label>
+                                </div>
+                                
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                  <label class="form-check-label" for="defaultCheckSaturday">
+                                   Tuesday
+                                  </label>
+                                </div>
+                                 <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                  <label class="form-check-label" for="defaultCheckSunday">
+                                    Wednesday
+                                  </label>
+                                </div>
+                                 <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                  <label class="form-check-label" for="defaultCheckMonday">
+                                    Thursday
+                                  </label>
+                                </div>
+
+
+
+                              <button type="submit" class="btn btn-success mt-2">Confirm</button>
+                            </form>
                          </div>
                          <div class="col-md-1"></div>
                      </div>
-            </div>
-            <div class="col-md-1"></div>
-        </div>
-    </div>
-</section>
+                 </div>
+                 <div class="col-md-3"></div>
 
-
-
+             </div>
+         </div>
+     </section> 
+     
+     
+     
+     
       <footer class="t-bg2">
          <div class="container">
              <div class="row py-5">
