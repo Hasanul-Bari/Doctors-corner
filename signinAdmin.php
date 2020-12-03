@@ -4,45 +4,27 @@
     
     
     
-    if ( isset($_POST["email"]) && isset($_POST["pass"]) ){
+    if ( isset($_POST["uname"]) && isset($_POST["pass"]) ){
             
               
-              $stmt = $pdo->prepare("SELECT Pid, Email, Pass FROM patients where Email= :em");
-              $stmt->execute(array(
-                  ":em" => $_POST["email"])
-                );
-              $row = $stmt->fetch(PDO::FETCH_ASSOC);
-              
-              if ( $row === false ){
-                $_SESSION['error'] = 'Id with this email does not exist';
-                header( 'Location: signin.php' ) ;
+              if($_POST["uname"]=='admin' &&  $_POST["pass"]=='admin')
+              {
+                  $_SESSION['admin'] = 'admin';
+                  header( 'Location: index.php' ) ;
+                  return;
+              }
+              else {
+                $_SESSION['error'] = 'Incorrect username or password';
+                header( 'Location: signinAdmin.php' ) ;
                 return;
               }
-              
-              $sk='arrow/*/-';
-              
-              $check = hash('md5', $sk.$_POST['pass']);
 
-              
-              if ( $check == $row["Pass"] ) {
-                $_SESSION['patient'] = $row["Pid"];
-                header( 'Location: index.php' ) ;
-                return;
-              } else {
-                $_SESSION['error'] = 'Incorrect password';
-                header( 'Location: signin.php' ) ;
-                return;
-              }
+
                         
         }
     
     
  ?>
-
-
-
-
-
 
 
 
@@ -99,7 +81,7 @@
                   <a class="nav-link" href="#">FAQ</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="signin.php">Sign in<span class="sr-only mr-1">(current)</span></a>
+                  <a class="nav-link" href="signin.php"> Admin Sign in</a>
                 </li>
               </ul>
               
@@ -141,8 +123,8 @@
 
 
             <div class="form-group">
-                <label for="email-input" class="col-form-label">Email</label>
-                  <input class="form-control" type="email" name="email"  id="email-input" placeholder="Enter Email" required>
+                <label for="uname-input" class="col-form-label">Username</label>
+                  <input class="form-control" type="text" name="uname"  id="uname-input"  required>
             </div>
 
             <div class="form-group">
