@@ -67,7 +67,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
 
-  <title>Admin Sign In</title>
+  <title>Doctor Sign In</title>
 </head>
 
 <body>
@@ -122,7 +122,7 @@
 
       <div class="row text-center mt-3">
         <div class="col-md-12">
-          <h2>Admin Sign In</h2>
+          <h2>Doctor Sign In</h2>
           <?php
               if ( isset($_SESSION["error"]) ) {
                   echo('<p style="color: red;">'.htmlentities($_SESSION["error"])."</p>\n");

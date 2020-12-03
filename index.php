@@ -56,13 +56,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent ">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="index.php">Home<span class="sr-only mr-1">(current)</span></a>
+                  <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Departments</a>
+                  <a class="nav-link" href="departments.php">Departments</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">FAQ</a>
@@ -117,7 +117,9 @@
         <div class="col-md-4">
           <?php 
                 if(!isset($_SESSION['patient'])){
-                  echo '<a type="button" class="btn btn-outline-primary t-head t-btn font-weight-bold" href="signup.php">Create Account</a>';
+                  echo '<a type="button" class="btn btn-outline-primary t-head t-btn font-weight-bold" href="signup.php">Create Account</a><br>';
+                  echo '<a type="button" class="btn btn-outline-primary t-head t-btn font-weight-bold" href="signinDoctor.php">Sign in as Docotor</a>';
+
                 }
            ?>
         </div>
