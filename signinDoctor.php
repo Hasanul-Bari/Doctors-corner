@@ -142,7 +142,7 @@
 
             <div class="form-group">
                 <label for="email-input" class="col-form-label">Email</label>
-                  <input class="form-control" type="email" name="email"  id="email-input" placeholder="Enter Email" required>
+                  <input class="form-control" type="email" name="email"  id="email-input" required>
             </div>
 
             <div class="form-group">
