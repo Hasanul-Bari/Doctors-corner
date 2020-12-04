@@ -4,10 +4,10 @@
     
     
     
-    if ( isset($_POST["email"]) && isset($_POST["pass"]) ){
+    if ( isset($_POST["email"]) && isset($_POST["pass"]) && isset($_POST["signIn"]) ){
             
               
-              $stmt = $pdo->prepare("SELECT Pid, Email, Pass FROM patients where Email= :em");
+              $stmt = $pdo->prepare("SELECT Did, Email, Pass FROM doctors where Email= :em");
               $stmt->execute(array(
                   ":em" => $_POST["email"])
                 );
@@ -15,7 +15,7 @@
               
               if ( $row === false ){
                 $_SESSION['error'] = 'Id with this email does not exist';
-                header( 'Location: signin.php' ) ;
+                header( 'Location: signinDoctor.php' ) ;
                 return;
               }
               
@@ -25,12 +25,12 @@
 
               
               if ( $check == $row["Pass"] ) {
-                $_SESSION['patient'] = $row["Pid"];
+                $_SESSION['doctor'] = $row["Did"];
                 header( 'Location: index.php' ) ;
                 return;
               } else {
                 $_SESSION['error'] = 'Incorrect password';
-                header( 'Location: signin.php' ) ;
+                header( 'Location: signinDoctor.php' ) ;
                 return;
               }
                         
@@ -93,13 +93,13 @@
                   <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Departments</a>
+                  <a class="nav-link" href="departments.php">Departments</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">FAQ</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="signin.php">Sign in<span class="sr-only mr-1">(current)</span></a>
+                  <a class="nav-link" href="signinDoctor.php">Doctor Sign in<span class="sr-only mr-1">(current)</span></a>
                 </li>
               </ul>
               
@@ -137,7 +137,7 @@
         <div class="col-md-8">
 
 
-          <form action="signinAdmin.php" method="post">
+          <form action="signinDoctor.php" method="post">
 
 
             <div class="form-group">
@@ -151,7 +151,7 @@
             </div>
 
 
-            <input type="submit" class="btn btn-primary" value="Sign in">
+            <input type="submit" class="btn btn-primary" name="signIn" value="Sign in">
           </form>
 
 
