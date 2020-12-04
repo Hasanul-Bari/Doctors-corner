@@ -59,6 +59,9 @@
       $stmt = $pdo->query("SELECT * FROM departments");
       $depts = $stmt->fetchAll(PDO::FETCH_ASSOC);
       
+      $weekdays=array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+
+      
  ?>
 
 
@@ -191,50 +194,14 @@
                 <p class="mt-3">Select Consultation Dates</p>
 
                 
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="1" name="day1">
-                  <label class="form-check-label">
-                    Monday
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="2" name="day2">
-                  <label class="form-check-label">
-                    Tuesday
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="3" name="day3">
-                  <label class="form-check-label">
-                    Wednesday
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="4" name="day4">
-                  <label class="form-check-label">
-                    Thursday
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="5" name="day5">
-                  <label class="form-check-label">
-                    Friday
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="6" name="day6">
-                  <label class="form-check-label">
-                    Saturday
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="7" name="day7">
-                  <label class="form-check-label">
-                    Sunday
-                  </label>
-                </div>
-
+                <?php 
+                      for($i=1; $i<=7; $i++){
+                          echo '<div class="form-check">';
+                          echo '<input class="form-check-input" type="checkbox" value="'.$i.'" name="day'.$i.'">';
+                          echo '<label class="form-check-label">'.$weekdays[$i-1].'</label></div>';
+                      }
+                              
+                 ?>
 
 
                 <input type="submit" name="confirm" value="Confirm" class="btn btn-success mt-2">
