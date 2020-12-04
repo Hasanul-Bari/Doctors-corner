@@ -3,7 +3,8 @@
     session_start();
     
     //testing doctorid is set
-    if ( ! isset($_GET['doctor_id']) ) {
+
+    if ( ! isset($_GET['doctor_id']) && !isset($_SESSION['doctor'])) {
       die("Bad parameter");
     }
     
@@ -18,9 +19,33 @@
       $pt = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    $stmt = $pdo->prepare("SELECT * FROM doctors where Did=:did");
-    $stmt->execute(array(":did" => $_GET['doctor_id']));
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if(isset($_SESSION['doctor'])){
+        $stmt = $pdo->prepare("SELECT * FROM doctors where Did= :did");
+        $stmt->execute(array(
+            ":did" => $_SESSION['doctor'])
+          );
+        $userdr = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    
+   if(isset($_GET['doctor_id'])){
+       $stmt = $pdo->prepare("SELECT * FROM doctors where Did=:did");
+       $stmt->execute(array(":did" => $_GET['doctor_id']));
+       $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    else{
+      $row=$userdr;
+    }
+    
+    //select dept name
+    $stmt = $pdo->prepare("SELECT dept_name FROM departments where dept_id=:dpid");
+    $stmt->execute(array(":dpid" => $row['dept_id']));
+    $dept = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    
+    
+    
+    
   
 ?>
 
@@ -89,6 +114,17 @@
                             </div></li>
                         <?php  
                       }
+                      else if(isset($_SESSION['doctor'])){
+                        ?>
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?=htmlentities($userdr['Name'])?> </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="doctorProfile.php">Profile</a>
+                            <a class="dropdown-item" href="logout.php">Logout</a>
+                            </div></li>
+                        <?php  
+                      }
                       else{
                         ?>
                             <li class="nav-item">
@@ -123,6 +159,8 @@
         <div class="col-md-4">
           <img src="img/doctorIcon.jpg" class="img-fluid" alt="">
 
+
+
           <div class="input-group mt-3">
             <div class="custom-file">
               <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
@@ -134,15 +172,29 @@
           </div>
 
         </div>
+              
+        
         <div class="col-md-6 mt-5">
-          <h4 class="text-primary">Doctor's name: Dr Shahriar Kabir</h4>
-          <h5>Department : Cardiology</h5>
-          <h5>Experience : Cardiology</h5>
-          <h5>Qualifications : MBBS (DMC), FCPS (Medicine),BCS (Health)</h5>
-          <button type="button" class="btn btn-success mt-2">Book Appoinment</button>
+          <h4 class="text-primary">Doctor's name: <?=htmlentities($row['Name'])?></h4>
+          <h5>Department : <?=htmlentities($dept['dept_name'])?></h5>
+          <h5>Qualifications : <?=htmlentities($row['Qualification'])?></h5>
+          <h5>Experience : <?=htmlentities($row['Experience'])?></h5>
+          
+          <p class="doc-bio mt-2"> <?=htmlentities($row['about'])?> </p>
+          
+          
+          <?php 
+              if(isset($_SESSION['patient'])) {
+                  echo '<a href="" type="button" class="btn btn-success mt-2">Book Appoinment</a>';
+              }
+              if(isset($_SESSION['doctor']) &&  $_SESSION['doctor']===$row['Did'] )  {
+                
+                  echo '<a href="doctorProfileEdit.php" type="button" class="btn btn-success mt-2">Edit Profile</a>';
+              }
+           ?>
+          
 
-          <p class="doc-bio mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis error maxime esse vero, nam voluptatibus aperiam saepe iure nesciunt enim. Molestias dolores dolorum, blanditiis aperiam officiis voluptate vel
-            saepe aut dolor, dignissimos voluptas, aliquam delectus veritatis. Quibusdam ex nulla nobis necessitatibus? Voluptatibus perspiciatis minima est dolore eum! Vero, fugit, culpa.</p>
+          
 
 
         </div>
