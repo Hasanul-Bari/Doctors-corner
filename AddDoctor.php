@@ -218,20 +218,7 @@
   
   
   
-  <?php 
-      $date=new DateTime();
-      //$date->modify( '+1 days' );
-      //$date->modify( '+1 days' );
-      //$date->modify( '+1 days' );
-      $weekday= $date->format('N');
-      echo $weekday;
-      
-   ?>
-
-
-
-
-
+  
 
 
 
