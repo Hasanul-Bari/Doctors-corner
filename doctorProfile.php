@@ -185,7 +185,7 @@
           
           <?php 
               if(isset($_SESSION['patient'])) {
-                  echo '<a href="" type="button" class="btn btn-success mt-2">Book Appoinment</a>';
+                  echo '<a href="BookAppointment.php?doctor_id='.$row['Did'].'" type="button" class="btn btn-success mt-2">Book Appoinment</a>';
               }
               if(isset($_SESSION['doctor']) &&  $_SESSION['doctor']===$row['Did'] )  {
                 
