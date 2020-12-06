@@ -26,7 +26,7 @@
               
               if ( $check == $row["Pass"] ) {
                 $_SESSION['doctor'] = $row["Did"];
-                header( 'Location: index.php' ) ;
+                header( 'Location: doctorProfile.php' ) ;
                 return;
               } else {
                 $_SESSION['error'] = 'Incorrect password';
