@@ -12,6 +12,14 @@
       $pt = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
+    if(isset($_SESSION['doctor'])){
+        $stmt = $pdo->prepare("SELECT Name FROM doctors where Did= :did");
+        $stmt->execute(array(
+            ":did" => $_SESSION['doctor'])
+          );
+        $userdr = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
     $stmt = $pdo->query("SELECT * FROM departments");
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -79,6 +87,17 @@
                             </div></li>
                         <?php  
                       }
+                      else if(isset($_SESSION['doctor'])){
+                        ?>
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?=htmlentities($userdr['Name'])?> </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="doctorProfile.php">Profile</a>
+                            <a class="dropdown-item" href="logout.php">Logout</a>
+                            </div></li>
+                        <?php  
+                      }
                       else{
                         ?>
                             <li class="nav-item">
@@ -110,22 +129,24 @@
   <section>
     <div class="container">
       <div class="row mt-3">
-        <div class="col-md-3"></div>
+        
         
         <?php 
             foreach ( $rows as $row ){
               ?>
+              <div class="col-md-3"></div>
               <div class="col-md-6 border border-dark rounded my-3">
                 <a href="doctorList.php?dept_id=<?=htmlentities($row['dept_id'])?>">
                   <h4 class="mt-3"><?=htmlentities($row['dept_name'])?></h4>
                 </a>
                 <p class=""><?=htmlentities($row['about'])?></p>
               </div>
+              <div class="col-md-3"></div>
               <?php  
             }
          ?>
             
-        <div class="col-md-3"></div>
+        
       </div>
 
     </div>
