@@ -77,7 +77,7 @@
                   <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Departments</a>
+                  <a class="nav-link" href="departments.php">Departments</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">FAQ</a>
