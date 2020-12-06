@@ -25,6 +25,14 @@
       $pt = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
+    if(isset($_SESSION['doctor'])){
+        $stmt = $pdo->prepare("SELECT Name FROM doctors where Did= :did");
+        $stmt->execute(array(
+            ":did" => $_SESSION['doctor'])
+          );
+        $userdr = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
     $stmt = $pdo->prepare("SELECT Did, Name FROM doctors where dept_id=:dpid");
     $stmt->execute(array(":dpid" => $_GET['dept_id']));
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -91,6 +99,17 @@
                             <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?=htmlentities($pt['Name'])?> </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="PatientProfile.php">Profile</a>
+                            <a class="dropdown-item" href="logout.php">Logout</a>
+                            </div></li>
+                        <?php  
+                      }
+                      else if(isset($_SESSION['doctor'])){
+                        ?>
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?=htmlentities($userdr['Name'])?> </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="doctorProfile.php">Profile</a>
                             <a class="dropdown-item" href="logout.php">Logout</a>
                             </div></li>
                         <?php  
