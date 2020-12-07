@@ -28,6 +28,25 @@
     }
     
     
+    
+    //fetching upcoming appointments
+    
+    $sql="SELECT  consultations.Cid, doctors.Name, consultations.Cdate
+          FROM consultations JOIN doctors
+          ON consultations.Did=doctors.Did 
+          WHERE consultations.Pid= :pid
+          ORDER BY consultations.Cdate";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ":pid" => $_SESSION["patient"])
+          );
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    
+
+    
+    
 ?>
 
 
@@ -124,17 +143,36 @@
             </div>
             <div class="col-md-1"></div>
           </div>
-          <div class="row border border-dark rounded my-3">
-            <div class="col-md-1"></div>
-            <div class="col-md-10 py-3">
-              <h5>Doctor Name : </h5>
-              <h4>Dr ABCD</h4>
-              <button type="button" class="btn btn-primary">Details</button>
-              <button type="button" class="btn btn-success">Status</button>
-              <span class="t-ConsultDate border border-dark rounded py-2">Date: </span>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
+          
+          <?php 
+                foreach ( $rows as $row ){
+                      
+                      $consultDate=htmlentities($row['Cdate']);
+                      $consultDate = substr_replace($consultDate, '-', 4 , 0);
+                      $consultDate = substr_replace($consultDate, '-', 7 , 0);
+                      $cdate=new DateTime($consultDate);
+                      
+                  
+                    ?>
+                          <div class="row border border-dark rounded my-3">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 py-3">
+                              
+                              <h4><?=htmlentities($row['Name'])?></h4>
+                              <h5>On <?= $cdate->format('l, jS  F Y') ?></h5>
+                              
+                              <button type="button" class="btn btn-primary">Details</button>
+                              <button type="button" class="btn btn-success">Status</button>
+                            
+                            </div>
+                            <div class="col-md-1"></div>
+                          </div>                    
+                    <?php 
+                }
+          
+           ?>
+          
+          
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-5">
