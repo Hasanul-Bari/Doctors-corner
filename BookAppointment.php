@@ -184,7 +184,7 @@
                           }
                           
                           $displaydate=$date->format('l, jS  F Y');
-                          $dbdate=$date->format('dmY');
+                          $dbdate=$date->format('Ymd');
                                           
                           $date->modify( '+1 days' );
                           
