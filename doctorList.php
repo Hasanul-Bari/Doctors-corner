@@ -33,9 +33,12 @@
         $userdr = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    $stmt = $pdo->prepare("SELECT Did, Name FROM doctors where dept_id=:dpid");
+    $stmt = $pdo->prepare("SELECT Did, Name, consultDays FROM doctors where dept_id=:dpid");
     $stmt->execute(array(":dpid" => $_GET['dept_id']));
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    
+    $weekdays=array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
   
 ?>
 
@@ -161,9 +164,25 @@
                       <h4><?= htmlentities($row['Name']) ?></h4>
                       
                       <a type="button" class="btn btn-primary" href="doctorProfile.php?doctor_id=<?=htmlentities($row['Did'])?>">Profile</a>
-                      <a type="button" class="btn btn-success" href="#">Book</a>
                       
-                      <p class="m-0"> Consult Day : <span class="t-ConsultingDay">Saturday to Wednesday</span></p>
+                      <?php 
+                            if(isset($_SESSION['patient'])) {
+                                echo '<a href="BookAppointment.php?doctor_id='.$row['Did'].'" type="button" class="btn btn-success">Book Appoinment</a>';
+                            }                
+                       ?>
+                      
+                      
+                      <p class="m-0"> Consult Day : <span class="t-ConsultingDay">
+                        <?php 
+                              $cd=$row['consultDays'];
+                              for($i=0; $i<7; $i++){
+                                  if($cd[$i]==1){
+                                      echo $weekdays[$i].' ';
+                                  }
+                              }
+                         ?>
+                      
+                      </span></p>
                       <p class=""> Consult Time : <span class="t-ConsultingTime">3pm to 8pm</span></p>
                     </div>
                     
