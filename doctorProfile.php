@@ -190,6 +190,8 @@
               if(isset($_SESSION['doctor']) &&  $_SESSION['doctor']===$row['Did'] )  {
                 
                   echo '<a href="doctorProfileEdit.php" type="button" class="btn btn-success mt-2">Edit Profile</a>';
+                  echo '&nbsp;';
+                  echo '<a href="Appointments.php" type="button" class="btn btn-success mt-2">My Appointments</a>';
               }
            ?>
           
