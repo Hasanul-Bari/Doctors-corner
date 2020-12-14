@@ -75,3 +75,17 @@
 .t-head{
     margin-top: 25%;
 }
+
+/*js form validate*/
+label.error {
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 5px;
+}
+
+input.error {
+    border: 1px solid red;
+    font-weight: 300;
+    color: red;
+}
