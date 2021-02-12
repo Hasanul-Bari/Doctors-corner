@@ -1,12 +1,12 @@
-<?php 
+<?php
     require_once "pdo.php";
     session_start();
-    
-    
-    
+
+
+
     if ( isset($_POST["uname"]) && isset($_POST["pass"]) ){
-            
-              
+
+
               if($_POST["uname"]=='admin' &&  $_POST["pass"]=='admin')
               {
                   $_SESSION['admin'] = 'admin';
@@ -20,10 +20,10 @@
               }
 
 
-                        
+
         }
-    
-    
+
+
  ?>
 
 
@@ -84,7 +84,7 @@
                   <a class="nav-link" href="signin.php"> Admin Sign in</a>
                 </li>
               </ul>
-              
+
             </div>
           </nav>
         </div>
@@ -128,8 +128,8 @@
             </div>
 
             <div class="form-group">
-              <label for="password-input" class="col-form-label">Password</label>                    
-                <input class="form-control" type="password" name="pass"  id="password-input" required>                    
+              <label for="password-input" class="col-form-label">Password</label>
+                <input class="form-control" type="password" name="pass"  id="password-input" required>
             </div>
 
 
@@ -149,7 +149,7 @@
 
 
 
-      
+
 
 
 
@@ -165,9 +165,21 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+  <!-- online version
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  -->
+
+
+  <!-- offline version  -->
+  <script src="js/jquery-3.5.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+
 </body>
 
 </html>
