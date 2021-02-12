@@ -1,14 +1,14 @@
-<?php 
+<?php
     require_once "pdo.php";
     session_start();
-    
-    
-    
+
+
+
     if ( isset($_POST["Pname"]) && isset($_POST["email"]) && isset($_POST["pass"]) && isset($_POST["dob"])
         && isset($_POST["phone"]) && isset($_POST["gender"]) && isset($_POST["weight"]) && isset($_POST["height"])  ){
-            
+
               $re="~^[0-9]+(\.[0-9]+)?$~";
-              
+
               if(preg_match($re, $_POST["weight"])==0){
                 $_SESSION['error'] = 'Enter a valid weight';
                 header( 'Location: signup.php' ) ;
@@ -19,23 +19,23 @@
                 header( 'Location: signup.php' ) ;
                 return;
               }
-              
+
               $stmt = $pdo->prepare("SELECT Email FROM patients where Email= :em");
               $stmt->execute(array(
                   ":em" => $_POST["email"])
                 );
               $row = $stmt->fetch(PDO::FETCH_ASSOC);
-              
+
               if ( $row !== false ){
                 $_SESSION['error'] = 'Id with this email already exist';
                 header( 'Location: signup.php' ) ;
                 return;
               }
-              
+
               $sk='arrow/*/-';
               $pass=hash('md5', $sk.$_POST['pass']);
-              
-              
+
+
               $sql = "INSERT INTO patients (Name, Email, Pass, Phone, DOB, Gender, Weight, Height) VALUES (:nm, :em, :pw, :ph, :bd, :gn, :wt, :ht)";
 
               $stmt = $pdo->prepare($sql);
@@ -50,7 +50,7 @@
                 ":ht" => $_POST["height"])
 
               );
-              
+
               $stmt = $pdo->prepare("SELECT Pid FROM patients where Email= :em");
               $stmt->execute(array(
                     ":em" => $_POST["email"])
@@ -60,13 +60,13 @@
              $_SESSION['patient'] = $row["Pid"];
              header( 'Location: index.php' ) ;
              return;
-              
-              
-              
-          
+
+
+
+
         }
-    
-    
+
+
  ?>
 
 <!doctype html>
@@ -123,7 +123,7 @@
                                 <a class="nav-link" href="signup.php">Sign up<span class="sr-only mr-1">(current)</span></a>
                               </li>
                             </ul>
-                          
+
                           </div>
                         </nav>
                      </div>
@@ -164,18 +164,18 @@
                         <label  for="Name">Name</label>
                         <input type="text" class="form-control" id="Name" name="Pname"  placeholder="Enter Name" required>
                       </div>
-                      
+
                       <div class="form-group">
                           <label for="email-input" class="col-form-label">Email</label>
                             <input class="form-control" type="email" name="email"  id="email-input" placeholder="Enter Email" required>
                       </div>
 
                       <div class="form-group">
-                        <label for="password-input" class="col-form-label">Password</label>                    
-                          <input class="form-control" type="password" name="pass"  id="password-input" required>                    
+                        <label for="password-input" class="col-form-label">Password</label>
+                          <input class="form-control" type="password" name="pass"  id="password-input" required>
                       </div>
-                    
-                      
+
+
                       <div class="form-group">
                         <label for="date-input">Date of Birth</label>
                           <input class="form-control" type="date" name="dob" id="date-input" required>
@@ -188,7 +188,7 @@
                               <input type="radio" class="form-check-input" name="gender" value="Male" required>Male
                               </label>
                           </div>
-                          
+
                           <div class="form-check">
                             <label class="form-check-label">
                                 <input type="radio" class="form-check-input" name="gender" value="Female">Female
@@ -209,15 +209,15 @@
                         <label  for="Weight">Weight in KG</label>
                         <input type="text" class="form-control" name="weight" id="Weight"  placeholder="Enter Weight" required>
                       </div>
-                      
-                      
+
+
                     <div class="form-group">
                         <label  for="Height">Height in cm</label>
                         <input type="text" class="form-control" name="height" id="Height"  placeholder="Enter Height" required>
                       </div>
 
                     <input type="submit" class="btn btn-primary" value="Sign Up">
-                    
+
                   </form>
 
 
@@ -248,19 +248,27 @@
 
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-    
-    <script src="js/signup.js" type="text/javascript">
-      
-    </script>
-    
-    
+<!-- Optional JavaScript -->
+
+<!-- online version
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+-->
+
+
+
+<!-- offline version  -->
+<script src="js/jquery-3.5.1.slim.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+
+<script src="js/signup.js" type="text/javascript"></script>
+
+
   </body>
 </html>
