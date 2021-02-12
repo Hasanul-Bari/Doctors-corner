@@ -1,41 +1,43 @@
-<?php 
+<?php
       require_once "pdo.php";
       session_start();
-      
+
       if(!isset($_SESSION['admin'])){
         die("ACCESS DENIED");
       }
-  
-      
+
+
       if(isset($_POST["Dname"]) && isset($_POST["email"]) && isset($_POST["pass"]) && isset($_POST["dept"]) && isset($_POST["quali"]) &&isset($_POST["confirm"]) ){
-            
-            
+
+
             $stmt = $pdo->prepare("SELECT Email FROM doctors where Email= :em");
             $stmt->execute(array(
                 ":em" => $_POST["email"])
               );
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            
+
             if ( $row !== false ){
               $_SESSION['error'] = 'Id with this email already exist';
               header( 'Location: AddDoctor.php' ) ;
               return;
             }
-            
+
             $sk='arrow/*/-';
             $pass=hash('md5', $sk.$_POST['pass']);
-            
-            
+
+
             //generating consult days
             $cd='0000000';
             for($i=1; $i<=7; $i++){
               if( isset($_POST['day'.$i]) ){
                   $cd[$i-1]='1';
+                  echo $_POST['tm'.$i];
+                  echo $_POST['Atno'.$i];
               }
             }
-            
-            
-            $sql = "INSERT INTO doctors (Name, Email, Pass, dept_id, Qualification, consultDays) VALUES (:nm, :em, :pw, :dpid, :quali, :cd)";
+
+
+            /*$sql = "INSERT INTO doctors (Name, Email, Pass, dept_id, Qualification, consultDays) VALUES (:nm, :em, :pw, :dpid, :quali, :cd)";
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array(
@@ -46,22 +48,22 @@
               ":quali" => $_POST["quali"],
               ":cd" => $cd)
 
-            );
-          
-            $_SESSION['success'] = "Doctor added successfully";
+            );*/
+
+            /*$_SESSION['success'] = "Doctor added successfully";
             header("Location: AddDoctor.php");
-            return;
-            
-            
-        
+            return;*/
+
+
+
       }
-      
+
       $stmt = $pdo->query("SELECT * FROM departments");
       $depts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      
+
       $weekdays=array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 
-      
+
  ?>
 
 
@@ -109,17 +111,17 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="AddDoctor.php">Add Doctor</a>
                 </li>
-                          
+
                 <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="img/profile.png" class="img-fluid" alt="">&nbsp; Admin </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="logout.php">Logout</a>
                             </div>
-                          </li>            
+                          </li>
               </ul>
-              
-              
+
+
             </div>
           </nav>
         </div>
@@ -129,19 +131,19 @@
   </header>
 
   <!--  NavBar-->
-  
-  
-  
+
+
+
   <section>
     <div class="container">
       <div class="row mt-3">
         <div class="col-md-3"></div>
         <div class="col-md-6">
           <div class="row">
-            
+
             <div class="col-md-12 text-center">
               <h3>Add Doctor</h3>
-              <?php 
+              <?php
                     if ( isset($_SESSION['error']) ) {
                         echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
                         unset($_SESSION['error']);
@@ -152,19 +154,19 @@
                     }
               ?>
             </div>
-            
+
           </div>
           <div class="row border border-dark rounded my-3">
             <div class="col-md-1"></div>
             <div class="col-md-10 py-3">
-              
+
               <form action="AddDoctor.php" method="post">
-                
+
                 <div class="form-group">
                   <label for="DocName">Name of the Doctor</label>
                   <input type="text" class="form-control"  id="DocName" name="Dname" required >
                 </div>
-                
+
                 <div class="form-group">
                   <label for="emailid">Email address</label>
                   <input type="email" class="form-control" id="emailid" name="email" required>
@@ -173,10 +175,10 @@
                   <label for="pwid">Password</label>
                   <input type="password" class="form-control" id="pwid" name="pass" required>
                 </div>
-                
+
                 <select class="form-control" name="dept" required>
                   <option value="">Select Department</option>
-                  <?php 
+                  <?php
                         foreach ($depts as $dept) {
                             echo "<option value=".$dept['dept_id'].">".htmlentities($dept['dept_name'])."</option>";
                         }
@@ -185,7 +187,7 @@
 
                 <p class="mt-3">Qualifications</p>
 
-                <div class="input-group">                                
+                <div class="input-group">
                   <textarea class="form-control" name="quali" ></textarea>
                 </div>
 
@@ -193,18 +195,33 @@
 
                 <p class="mt-3">Select Consultation Dates</p>
 
-                
-                <?php 
+
+                <?php
                       for($i=1; $i<=7; $i++){
                           echo '<div class="form-check">';
                           echo '<input class="form-check-input" type="checkbox" value="'.$i.'" name="day'.$i.'">';
                           echo '<label class="form-check-label">'.$weekdays[$i-1].'</label></div>';
+
+                          // time and no of apnt of that days
+
+                          echo '<div id="toggleee'.$i.'" style="display:none">';
+                          echo '<div class="form-group">';
+                          echo '<label for="timeinput">Enter time: </label>';
+                          echo '<input type="time" class="form-control"  name="tm'.$i.'" >';
+                          echo '</div>';
+                          echo '<div class="form-group">';
+                          echo '<label for="appntNo">Max appointment allowed: </label>';
+                          echo '<input type="number" class="form-control"  name="Atno'.$i.'" min="1" >';
+                          echo '</div>';
+                          echo '</div>';
+
                       }
-                              
+
                  ?>
-                 
-                <!-- <div id="toggleee" style="display:none">
-                    
+
+                <!--
+                 <div id="toggleee" style="display:none">
+
                    <div class="form-group">
                      <label for="timeinput">Enter time: </label>
                      <input type="time" class="form-control" id="timeinput" name="tm" required>
@@ -213,12 +230,14 @@
                      <label for="appntNo">Max appointment allowed: </label>
                      <input type="number" class="form-control" id="appntNo" name="Atno" required>
                    </div>
-                    
-                 </div>  -->
-                 
-                 
-                 
-                 
+
+                 </div>
+
+               -->
+
+
+
+
 
 
                 <input type="submit" name="confirm" value="Confirm" class="btn btn-success mt-2">
@@ -232,34 +251,54 @@
       </div>
     </div>
   </section>
-  
-  
-  
-  
 
 
 
-  
+
+
+
+
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- online version
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  
-  <!-- <script type="text/javascript">
-    
+  -->
+
+
+  <!-- offline version  -->
+  <script src="js/jquery-3.5.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+   <script type="text/javascript">
+
     $(document).ready(function() {
-        
+
         $('input[type="checkbox"]').change(function(){
-            
-            console.log($(this).attr("value"));
-            
-            $('#toggleee').toggle();
+
+            var toggleid=$(this).attr("value");
+            console.log(toggleid);
+
+            toggleid='#toggleee'+toggleid;
+
+            //console.log(toggleid);
+
+            $(toggleid).toggle();
         });
-        
+
     });
-    
-  </script>  -->
+
+  </script>
 
 </body>
 
