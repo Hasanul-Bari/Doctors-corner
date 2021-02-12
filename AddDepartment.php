@@ -1,13 +1,13 @@
-<?php 
+<?php
     require_once "pdo.php";
     session_start();
 
     if(!isset($_SESSION['admin'])){
       die("ACCESS DENIED");
     }
-    
+
     if(isset($_POST["dept_name"]) && isset($_POST["about"]) && isset($_POST["add"]) ){
-      
+
         $sql = "INSERT INTO departments (dept_name, about) VALUES (:dn, :abt)";
 
         $stmt = $pdo->prepare($sql);
@@ -19,7 +19,7 @@
         $_SESSION['success'] = "Department added successfully";
         header("Location: AddDepartment.php");
         return;
-      
+
     }
 
  ?>
@@ -69,17 +69,17 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="AddDoctor.php">Add Department</a>
                 </li>
-                          
+
                 <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="img/profile.png" class="img-fluid" alt="">&nbsp; Admin </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="logout.php">Logout</a>
                             </div>
-                          </li>            
+                          </li>
               </ul>
-              
-              
+
+
             </div>
           </nav>
         </div>
@@ -95,7 +95,7 @@
       <div class="row">
         <div class="col-md-12 text-center text-primary">
           <h3>Add Department</h3>
-          <?php 
+          <?php
           if ( isset($_SESSION['success']) ) {
               echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
               unset($_SESSION['success']);
@@ -103,29 +103,29 @@
           ?>
         </div>
       </div>
-      
-      
+
+
       <div class="row my-3">
         <div class="col-md-3"></div>
         <div class="col-md-6 py-3 border border-dark rounded">
-          
-          
+
+
           <form action="AddDepartment.php" method="post">
             <div class="form-group">
               <label>Name of the Department</label>
               <input type="text" class="form-control" name="dept_name">
             </div>
-            
+
             <p class="mt-3">About</p>
 
-            <div class="input-group">                                
+            <div class="input-group">
               <textarea class="form-control" name="about" ></textarea>
             </div>
 
             <input type="submit" name="add" value="Add" class="btn btn-success mt-2">
           </form>
-          
-          
+
+
         </div>
         <div class="col-md-3"></div>
       </div>
@@ -136,12 +136,21 @@
 
 
 
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- online version
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  -->
+
+
+  <!-- offline version  -->
+  <script src="js/jquery-3.5.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+
+
+
 </body>
 
 </html>
