@@ -1,7 +1,7 @@
-<?php 
+<?php
       require_once "pdo.php";
       session_start();
-      
+
       if(!isset($_SESSION['admin'])){
         die("ACCESS DENIED");
       }
@@ -48,17 +48,17 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="AdminPanel.php">Admin Panel</a>
                 </li>
-                          
+
                 <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="img/profile.png" class="img-fluid" alt="">&nbsp; Admin </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="logout.php">Logout</a>
                             </div>
-                          </li>            
+                          </li>
               </ul>
-              
-              
+
+
             </div>
           </nav>
         </div>
@@ -75,24 +75,31 @@
         <div class="col-md-1"></div>
         <div class="col-md-5 mt-5">
           <a href="" type="button" class="btn btn-primary">Doctor List</a><br><br>
-          
+
           <a href="AddDoctor.php"><button type="button" class="btn btn-success">Add Doctor</button></a><br><br>
           <a href="AddDepartment.php"><button type="button" class="btn btn-success">Add Department</button></a>
 
 
         </div>
-    
-        
+
+
       </div>
     </div>
   </section>
 
 
   <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- online version
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  -->
+
+
+  <!-- offline version  -->
+  <script src="js/jquery-3.5.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 
 
 </body>
