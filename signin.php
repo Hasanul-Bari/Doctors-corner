@@ -1,29 +1,33 @@
-<?php 
+<?php
     require_once "pdo.php";
     session_start();
-    
-    
-    
+
+
+
+
+
+
+
     if ( isset($_POST["email"]) && isset($_POST["pass"]) ){
-            
-              
+
+
               $stmt = $pdo->prepare("SELECT Pid, Email, Pass FROM patients where Email= :em");
               $stmt->execute(array(
                   ":em" => $_POST["email"])
                 );
               $row = $stmt->fetch(PDO::FETCH_ASSOC);
-              
+
               if ( $row === false ){
                 $_SESSION['error'] = 'Id with this email does not exist';
                 header( 'Location: signin.php' ) ;
                 return;
               }
-              
+
               $sk='arrow/*/-';
-              
+
               $check = hash('md5', $sk.$_POST['pass']);
 
-              
+
               if ( $check == $row["Pass"] ) {
                 $_SESSION['patient'] = $row["Pid"];
                 header( 'Location: index.php' ) ;
@@ -33,14 +37,14 @@
                 header( 'Location: signin.php' ) ;
                 return;
               }
-              
-              
-              
-                     
-          
+
+
+
+
+
         }
-    
-    
+
+
  ?>
 
 
@@ -106,7 +110,7 @@
                   <a class="nav-link" href="signin.php">Sign in<span class="sr-only mr-1">(current)</span></a>
                 </li>
               </ul>
-              
+
             </div>
           </nav>
         </div>
@@ -150,8 +154,8 @@
             </div>
 
             <div class="form-group">
-              <label for="password-input" class="col-form-label">Password</label>                    
-                <input class="form-control" type="password" name="pass"  id="password-input">                    
+              <label for="password-input" class="col-form-label">Password</label>
+                <input class="form-control" type="password" name="pass"  id="password-input">
             </div>
 
 
@@ -190,15 +194,26 @@
 
 
   <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  <!-- online version
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-  
+
+  -->
+
+
+
+  <!-- offline version  -->
+  <script src="js/jquery-3.5.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
+
   <script src="js/signin.js" type="text/javascript">
-    
+
   </script>
 
 </body>
