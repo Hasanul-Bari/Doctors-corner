@@ -151,14 +151,15 @@
         </div>
         <div class="col-md-2"></div>
       </div>
-      <div class="row my-3">
-        <div class="col-md-2"></div>
+      
+        
         
         
         <?php 
             foreach ( $rows as $row ){
               ?>
-              
+                  <div class="row my-3">
+                    <div class="col-md-2"></div>
                     <div class="col-md-8 border rounded border-dark py-3">
                       <h5>Doctor's name:</h5>
                       <h4><?= htmlentities($row['Name']) ?></h4>
@@ -185,13 +186,16 @@
                       </span></p>
                       <p class=""> Consult Time : <span class="t-ConsultingTime">3pm to 8pm</span></p>
                     </div>
+
+                    <div class="col-md-2"></div>
+                    </div>
                     
               <?php  
           }
       ?>
         
-        <div class="col-md-2"></div>
-      </div>
+        
+      
     </div>
   </section>
 
