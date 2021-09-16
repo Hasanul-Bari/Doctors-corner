@@ -37,11 +37,32 @@
           
                 
           //generating consult days
-          $cd='0000000';
+          $cd='';
           for($i=1; $i<=7; $i++){
+
+            // If the day is selected
             if( isset($_POST['day'.$i]) ){
-                $cd[$i-1]='1';
+
+              $NoOfAppointments=$_POST['Atno'.$i];
+
+              if($NoOfAppointments<'10'){
+                $NoOfAppointments='00'.$NoOfAppointments;
+              }
+              else if($NoOfAppointments<'100'){
+                $NoOfAppointments='0'.$NoOfAppointments;
+              }
+
+                
+
+                $cd=$cd.'1'.$_POST['tm'.$i].$NoOfAppointments;
+               
             }
+            //for days not selected
+            else{
+              $cd=$cd.'0tt:ttnnn';
+            }
+            /*echo $cd;
+            echo "<br>";*/
           }
           
           
@@ -84,7 +105,7 @@
       $quali=htmlentities($row['Qualification']);
       $exp=htmlentities($row['Experience']);
       $abt=htmlentities($row['about']);
-      $cd=$row['consultDays'];
+      $cd=htmlentities($row['consultDays']);
       
       
       $weekdays=array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
@@ -231,11 +252,39 @@
                 
                 <?php 
                       for($i=1; $i<=7; $i++){
-                          $ch= ($cd[$i-1]==1) ? 'checked' : '';
-                          //echo $ch;
+
+                        $index=($i-1)*9;
+                        $ch= ($cd[$index]=='1') ? 'checked' : '';
+                        $display= ($cd[$index]=='0') ? 'style="display:none"' : '';
+
+                        $time= ($cd[$index]=='1') ? 'value="'.substr($cd,$index+1,5).'"' : '';
+                        $NoOfAppointment= ($cd[$index]=='1') ? 'value="'.substr($cd,$index+6,3).'"' : '';
+
+
+                        
+
+                        
                           echo '<div class="form-check">';
                           echo '<input class="form-check-input" type="checkbox" value="'.$i.'" name="day'.$i.'" '.$ch.'>';
                           echo '<label class="form-check-label">'.$weekdays[$i-1].'</label></div>';
+
+
+
+                          echo '<div id="toggleee'.$i.'" '.$display.'>';
+                          echo '<div class="form-group">';
+                          echo '<label for="timeinput">Enter time: </label>';
+                          echo '<input type="time" class="form-control" '.$time.' name="tm'.$i.'"  >';
+                          echo '</div>';
+                          echo '<div class="form-group">';
+                          echo '<label for="appntNo">Max appointment allowed: </label>';
+                          echo '<input type="number" class="form-control" '.$NoOfAppointment.'  name="Atno'.$i.'"  min="1" max="100" >';
+                          echo '</div>';
+                          echo '</div>';
+
+
+                          
+
+
                       }
                               
                  ?>
@@ -267,6 +316,27 @@
   <?php 
     require_once "footer.php";
    ?>  
+
+
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+
+      $('input[type="checkbox"]').change(function(){
+
+          var toggleid=$(this).attr("value");
+          
+
+          toggleid='#toggleee'+toggleid;
+
+          //console.log(toggleid);
+          
+          $(toggleid).toggle();
+      });
+
+  });
+
+  </script>
 
 </body>
 
