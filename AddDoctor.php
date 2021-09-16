@@ -27,17 +27,38 @@
 
 
             //generating consult days
-            $cd='0000000';
+            $cd='';
             for($i=1; $i<=7; $i++){
+
+              // If the day is selected
               if( isset($_POST['day'.$i]) ){
-                  $cd[$i-1]='1';
-                  echo $_POST['tm'.$i];
-                  echo $_POST['Atno'.$i];
+
+                $NoOfAppointments=$_POST['Atno'.$i];
+
+                if($NoOfAppointments<'10'){
+                  $NoOfAppointments='00'.$NoOfAppointments;
+                }
+                else if($NoOfAppointments<'100'){
+                  $NoOfAppointments='0'.$NoOfAppointments;
+                }
+
+                  
+
+                  $cd=$cd.'1'.$_POST['tm'.$i].$NoOfAppointments;
+                 
               }
+              //for days not selected
+              else{
+                $cd=$cd.'0tt:ttnnn';
+              }
+              /*echo $cd;
+              echo "<br>";*/
             }
 
+            
 
-            /*$sql = "INSERT INTO doctors (Name, Email, Pass, dept_id, Qualification, consultDays) VALUES (:nm, :em, :pw, :dpid, :quali, :cd)";
+
+            $sql = "INSERT INTO doctors (Name, Email, Pass, dept_id, Qualification, consultDays) VALUES (:nm, :em, :pw, :dpid, :quali, :cd)";
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array(
@@ -48,11 +69,11 @@
               ":quali" => $_POST["quali"],
               ":cd" => $cd)
 
-            );*/
+            );
 
-            /*$_SESSION['success'] = "Doctor added successfully";
+            $_SESSION['success'] = "Doctor added successfully";
             header("Location: AddDoctor.php");
-            return;*/
+            return;
 
 
 
@@ -128,7 +149,7 @@
 
       </div>
     </div>
-  </header>
+  </header> 
 
   <!--  NavBar-->
 
@@ -202,7 +223,7 @@
                           echo '<input class="form-check-input" type="checkbox" value="'.$i.'" name="day'.$i.'">';
                           echo '<label class="form-check-label">'.$weekdays[$i-1].'</label></div>';
 
-                          // time and no of apnt of that days
+                          // time and no of appointment of that days
 
                           echo '<div id="toggleee'.$i.'" style="display:none">';
                           echo '<div class="form-group">';
@@ -211,7 +232,7 @@
                           echo '</div>';
                           echo '<div class="form-group">';
                           echo '<label for="appntNo">Max appointment allowed: </label>';
-                          echo '<input type="number" class="form-control"  name="Atno'.$i.'" min="1" >';
+                          echo '<input type="number" class="form-control"  name="Atno'.$i.'"  min="1" max="100" >';
                           echo '</div>';
                           echo '</div>';
 
@@ -287,12 +308,12 @@
         $('input[type="checkbox"]').change(function(){
 
             var toggleid=$(this).attr("value");
-            console.log(toggleid);
+            
 
             toggleid='#toggleee'+toggleid;
 
             //console.log(toggleid);
-
+            
             $(toggleid).toggle();
         });
 
