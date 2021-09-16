@@ -18,12 +18,68 @@
     }
     
     
-    if( isset($_POST["Apntday"]) && isset($_POST["bkash"]) && isset($_POST["txid"]) && isset($_POST["pid"]) && isset($_POST["did"]) && isset($_POST["confirm"]) ){
+    if( isset($_POST["Apntday"]) && isset($_POST["bkash"]) && isset($_POST["txid"]) && isset($_POST["pid"]) && isset($_POST["did"]) && isset($_POST["consultDays"]) && isset($_POST["confirm"]) ){
       
-        
-        
-        $bookingTime=time();
+      
+
+        $bookingTime=time();    //current time
         $appointmentDay=(int)($_POST["Apntday"]);
+
+        // finding maximum no of appointments that day can have
+        $Max_appointments= (int)$_POST[$_POST["Apntday"]];
+
+
+
+        
+
+        //cheching if the doctor has available consultations
+
+        $stmt = $pdo->prepare("SELECT current_count FROM consultation_Count where Did= :did and date_= :dt");
+              $stmt->execute(array(
+                  ":did" => $_POST["did"],
+                  ":dt" => $_POST["Apntday"])
+                );
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $current_appointments=0;
+
+        if ( $row !== false ){
+          $current_appointments=(int)$row['current_count'];
+        }
+
+
+        //requested appointment can be accepted
+        if($current_appointments+1 <= $Max_appointments){
+          $current_appointments++;
+
+          if($row === false){
+            $sql = "INSERT INTO consultation_Count (Did, date_, current_count) VALUES (:did, :dt, :cn)";
+
+              $stmt = $pdo->prepare($sql);
+              $stmt->execute(array(
+                ":did" => $_POST["did"],
+                ":dt" => $_POST["Apntday"],
+                ":cn" => $current_appointments)
+              );
+          }
+          else{
+            $sql = "UPDATE consultation_Count SET  current_count = :cn
+                        WHERE Did = :did and date_= :dt";
+                        
+              $stmt = $pdo->prepare($sql);
+              $stmt->execute(array(
+                ":did" => $_POST["did"],
+                ":dt" => $_POST["Apntday"],
+                ":cn" => $current_appointments)
+              );
+          }
+        }
+        //requested appointment can't be accepted
+        else{
+          $_SESSION['error'] = 'Maximum appointments limit exceeds for requested day';
+          header('Location: BookAppointment.php?doctor_id='.$_POST["did"]);
+          return;
+        }
         
         
         
@@ -69,7 +125,7 @@
   
     date_default_timezone_set('Asia/Dhaka');
     $date=new DateTime();
-    $todayNo= $date->format('N');
+    $todayNo= $date->format('N');        // returns weekday number // monday=1
         
     
 ?>
@@ -188,12 +244,23 @@
                                           
                           $date->modify( '+1 days' );
                           
-                          if($consultDays[$d-1]=='1'){
+                          if($consultDays[($d-1)*9]=='1'){
+
+                            $index=($d-1)*9;
+                            $time= substr($consultDays,$index+1,5);
+                            $NoOfAppointment= substr($consultDays,$index+6,3);
+
+                            $time_12hr=new DateTime($time);
+                            $time= $time_12hr->format('h:i a');
+
+                            $displaydate=$displaydate.' at '.$time;
                               
                               
                               echo '<div class="form-check">';
                               echo '<label class="form-check-label">';
                               echo '<input type="radio" class="form-check-input" name="Apntday" value="'.$dbdate.'" required>'.$displaydate.'</label></div>';
+
+                              echo '<input type="hidden" name="'.$dbdate.'" value="'.$NoOfAppointment.'">';
                           }               
                           
                         }
@@ -218,6 +285,8 @@
                   
                   <input type="hidden" name="pid" value="<?= $_SESSION['patient'] ?>">
                   <input type="hidden" name="did" value="<?= $_GET['doctor_id'] ?>">
+
+                  <input type="hidden" name="consultDays" value="<?= $dr['consultDays'] ?>">
                   
                   
                   
@@ -236,12 +305,16 @@
                   
             </form>
             
-            <?php 
-                if ( isset($_SESSION['success']) ) {
-                    echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
-                    unset($_SESSION['success']);
-                }
-             ?>
+            <?php
+                    if ( isset($_SESSION['error']) ) {
+                        echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+                        unset($_SESSION['error']);
+                    }
+                    if ( isset($_SESSION['success']) ) {
+                        echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
+                        unset($_SESSION['success']);
+                    }
+              ?>
               
           
 
