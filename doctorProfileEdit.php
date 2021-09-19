@@ -43,12 +43,12 @@
             // If the day is selected
             if( isset($_POST['day'.$i]) ){
 
-              $NoOfAppointments=$_POST['Atno'.$i];
+              $NoOfAppointments=(int)$_POST['Atno'.$i];
 
-              if($NoOfAppointments<'10'){
+              if($NoOfAppointments<10){
                 $NoOfAppointments='00'.$NoOfAppointments;
               }
-              else if($NoOfAppointments<'100'){
+              else if($NoOfAppointments<100){
                 $NoOfAppointments='0'.$NoOfAppointments;
               }
 
@@ -83,7 +83,7 @@
 
           );
         
-  
+          $_SESSION['success'] = 'Profile Updated successfully';
           header("Location: doctorProfile.php");
           return;
           
