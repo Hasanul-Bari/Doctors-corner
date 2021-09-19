@@ -17,7 +17,7 @@
       $today= $date->format('Ymd');
       
       
-      $sql="SELECT  consultations.Cid, patients.Name, consultations.Cdate
+      $sql="SELECT  consultations.Cid, consultations.Pid, patients.Name, consultations.Cdate, consultations.Ctime
             FROM consultations JOIN patients
             ON consultations.pid=patients.Pid 
             WHERE consultations.Did= :Did and consultations.Cdate= :today
@@ -118,7 +118,7 @@
       <div class="row mt-3">
         <div class="col-md-2"></div>
         <div class="col-md-8 text-center">
-          <h3>Appointments on <?= $date->format('l, jS  F Y') ?></h3>
+          <h3>Appointments on <?= $date->format('l, jS  F Y') ?> </h3>
         </div>
         <div class="col-md-2"></div>
       </div>
@@ -140,10 +140,10 @@
                     <div class="row my-3">
                     <div class="col-md-2"></div>
                     <div class="col-md-8 border rounded border-dark py-3">
-                      <h5>Patient name:</h5>
-                      <h4><?= htmlentities($row['Name']) ?></h4>
+                      <h5>Patient name: <?= htmlentities($row['Name']) ?> </h5>
+                      <h5>Time : <?= htmlentities($row['Ctime']) ?></h5>
                       
-                      <a type="button" class="btn btn-primary">Details</a>
+                      <a href="PatientProfile.php?patient_id=<?= htmlentities($row['Pid']) ?>" type="button" class="btn btn-primary">Details</a>
                       <a type="button" class="btn btn-success">Meeting</a>
                     </div>
                     <div class="col-md-2"></div>
