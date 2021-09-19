@@ -29,8 +29,7 @@
         $Max_appointments= (int)$_POST[$_POST["Apntday"]];
 
 
-
-        
+        $consult_time=$_POST[$_POST["Apntday"].'t'];
 
         //cheching if the doctor has available consultations
 
@@ -83,13 +82,14 @@
         
         
         
-        $sql = "INSERT INTO consultations (Pid, Did, Cdate, Btime, Bkash, Txid) VALUES (:pid, :did, :cdate, :btime, :bkash, :txid)";
+        $sql = "INSERT INTO consultations (Pid, Did, Cdate, Btime, Bkash, Txid, Ctime) VALUES (:pid, :did, :cdate, :btime, :bkash, :txid, :ctime)";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(
           ":pid" => $_POST["pid"],
           ":did" => $_POST["did"],
           ":cdate" => $appointmentDay,
+          ":ctime" => $consult_time,
           ":btime" => $bookingTime,
           ":bkash" => $_POST["bkash"],
           ":txid" => $_POST["txid"])
@@ -261,6 +261,7 @@
                               echo '<input type="radio" class="form-check-input" name="Apntday" value="'.$dbdate.'" required>'.$displaydate.'</label></div>';
 
                               echo '<input type="hidden" name="'.$dbdate.'" value="'.$NoOfAppointment.'">';
+                              echo '<input type="hidden" name="'.$dbdate.'t'.'" value="'.$time.'">';
                           }               
                           
                         }
