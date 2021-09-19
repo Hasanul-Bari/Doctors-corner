@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  console.log('Hello');
+  //console.log('Hello');
   $("#PsigninForm").validate({
     rules: {
           email: {
