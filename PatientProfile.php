@@ -77,10 +77,10 @@
     
     //fetching previous appointments
     
-    $sql="SELECT  consultations.Cid, doctors.Name, consultations.Cdate, consultations.Ctime
+    $sql="SELECT  consultations.Cid, doctors.Name, consultations.Cdate, consultations.Ctime, consultations.status_
           FROM consultations JOIN doctors
           ON consultations.Did=doctors.Did 
-          WHERE consultations.Pid= :pid and consultations.Cdate< :currentDate
+          WHERE consultations.Pid= :pid and (consultations.Cdate< :currentDate or consultations.status_= 1)
           ORDER BY consultations.Cdate";
 
     $stmt = $pdo->prepare($sql);
@@ -96,7 +96,7 @@
     $sql="SELECT  consultations.Cid, doctors.Name, consultations.Cdate, consultations.Ctime
           FROM consultations JOIN doctors
           ON consultations.Did=doctors.Did 
-          WHERE consultations.Pid= :pid and consultations.Cdate>= :currentDate
+          WHERE consultations.Pid= :pid and consultations.Cdate>= :currentDate and consultations.status_= 0
           ORDER BY consultations.Cdate";
 
     $stmt = $pdo->prepare($sql);
@@ -172,7 +172,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?= $nm ?> </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="PatientProfile.php">Profilee</a>
+                            <a class="dropdown-item" href="PatientProfile.php">Profile</a>
                             <a class="dropdown-item" href="logout.php">Logout</a>
                             </div></li>
                         <?php  
@@ -281,6 +281,8 @@
                       $consultDate = substr_replace($consultDate, '-', 4 , 0);
                       $consultDate = substr_replace($consultDate, '-', 7 , 0);
                       $cdate=new DateTime($consultDate);
+
+                      $status=htmlentities($row["status_"]);
                       
                   
           ?>
@@ -291,10 +293,23 @@
                               <h5>Consultant: <?=htmlentities($row['Name'])?></h5>
                               <h5>On <?= $cdate->format('l, jS  F Y') ?></h5>
                               <h5>At <?= htmlentities($row['Ctime']) ?></h5>
-                              
-                              <button type="button" class="btn btn-primary">Details</button>
-                              <button type="button" class="btn btn-success">Status</button>
-                            
+
+
+                              <?php 
+                                if($status==1){
+                                
+                              ?>
+                                  <a type="button" class="btn btn-primary" href="prescriptionView.php?cid=<?= $row['Cid']?>">Details</a>
+                                  <button type="button" class="btn btn-outline-success" disabled>Finished</button>
+                              <?php 
+                                }
+                                else{
+                              ?>
+                                  <button type="button" class="btn btn-outline-danger" disabled>Canceled</button>
+                             <?php 
+                                }
+                             ?>
+
                             </div>
                             <div class="col-md-1"></div>
                           </div>                    
@@ -336,8 +351,8 @@
                               <h5>At <?= htmlentities($row['Ctime']) ?></h5>
                               
                               
-                              <a type="button" class="btn btn-primary" href="prescription.php?cid=<?= $row['Cid']?>">Details</a>
-                              <button type="button" class="btn btn-success">Status</button>
+
+                              <button type="button" class="btn btn-success">Meeting</button>
                             
                             </div>
                             <div class="col-md-1"></div>
