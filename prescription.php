@@ -42,7 +42,16 @@
           ":dt" => $_POST["date"])
       );
 
-      $_SESSION['success'] = 'Prescription saved successfully';
+      $sql = "UPDATE consultations SET  status_=:s
+                        WHERE Cid = :cid";
+                        
+              $stmt = $pdo->prepare($sql);
+              $stmt->execute(array(
+                ":s" => 1,
+                ":cid" => $_POST['cid'])
+              );
+
+      //$_SESSION['success'] = 'Prescription saved successfully';
       header('Location: Appointments.php');
       return;
 
