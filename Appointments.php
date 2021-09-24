@@ -15,9 +15,23 @@
       date_default_timezone_set('Asia/Dhaka');
       $date=new DateTime();
       $today= $date->format('Ymd');
+
+      if( isset($_POST["dt"])){
+        
+          //echo $_POST["dt"];
+
+          $date=new DateTime($_POST["dt"]);
+          $today= $date->format('Ymd');
+
+          
+      }
+
+      //echo $today;
+
+
       
       
-      $sql="SELECT  consultations.Cid, consultations.Pid, patients.Name, consultations.Cdate, consultations.Ctime
+      $sql="SELECT  consultations.Cid, consultations.Pid, patients.Name, consultations.Cdate, consultations.Ctime, consultations.status_
             FROM consultations JOIN patients
             ON consultations.pid=patients.Pid 
             WHERE consultations.Did= :Did and consultations.Cdate= :today
@@ -135,22 +149,75 @@
         
         
         <?php 
-              foreach ( $rows as $row ){
-                ?>
-                    <div class="row my-3">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 border rounded border-dark py-3">
-                      <h5>Patient name: <?= htmlentities($row['Name']) ?> </h5>
-                      <h5>Time : <?= htmlentities($row['Ctime']) ?></h5>
-                      
-                      <a href="PatientProfile.php?patient_id=<?= htmlentities($row['Pid']) ?>" type="button" class="btn btn-primary">Details</a>
-                      <a type="button" class="btn btn-success">Meeting</a>
-                    </div>
-                    <div class="col-md-2"></div>
-                    </div>
-                <?php 
+              if($rows==false)
+              {
+                echo '<div class="row my-3">';
+                echo '<div class="col-md-2"></div>';
+                echo '<div class="col-md-8 text-center"> <h3> No consultation </h3> </div>';
+                echo '<div class="col-md-2"></div>';
+
               }
+              else
+              {
+                foreach ( $rows as $row ){
+
+                  $status=htmlentities($row["status_"]);
+  
+                  ?>
+                      <div class="row my-3">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8 border rounded border-dark py-3">
+                        <h5>Patient name: <?= htmlentities($row['Name']) ?> </h5>
+                        <h5>Time : <?= htmlentities($row['Ctime']) ?></h5>
+  
+                        <a href="PatientProfile.php?patient_id=<?= htmlentities($row['Pid']) ?>" type="button" class="btn btn-primary">Details</a>
+  
+                        <?php 
+                          if($status==1){
+                        
+                        ?>
+                            <button type="button" class="btn btn-outline-success" disabled>Finished</button>
+                        <?php 
+                          }
+                          else{
+                        ?>
+                            
+                            <a type="button" class="btn btn-primary" href="prescription.php?cid=<?= $row['Cid']?>">Write prescription</a>
+                            <a type="button" class="btn btn-success">Meeting</a>
+                        <?php 
+                          }
+                        ?>
+                        
+                        
+                      </div>
+                      <div class="col-md-2"></div>
+                      </div>
+                  <?php 
+                }
+
+              }
+
+              
          ?>
+
+        
+        
+
+        <div>
+
+              <br><br>
+              <h4>See appointments for a specific date</h4>
+              <form action="Appointments.php" method="POST">
+
+              <label for="dt"> <h4>Select date : </h4></label>
+              <input type="date" id="dt" name="dt" min="1900-01-01" max="2099-01-01" required>
+
+              <input type="submit"  class="btn btn-success" value="Go"> 
+
+
+              </form>
+
+        </div>
         
         
       
