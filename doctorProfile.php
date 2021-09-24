@@ -95,9 +95,14 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#">About</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" href="departments.php">Departments</a>
                 </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="Appointments.php">My appointments</a>
+                </li>
+
                 <li class="nav-item">
                   <a class="nav-link" href="#">FAQ</a>
                 </li>
@@ -105,7 +110,7 @@
                 <?php 
                       if(isset($_SESSION['patient'])){
                         ?>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?=htmlentities($pt['Name'])?> </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -116,7 +121,7 @@
                       }
                       else if(isset($_SESSION['doctor'])){
                         ?>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="img/profile.png" class="img-fluid" alt="">&nbsp; <?=htmlentities($userdr['Name'])?> </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

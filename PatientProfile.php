@@ -161,6 +161,16 @@
                 <li class="nav-item">
                   <a class="nav-link" href="departments.php">Departments</a>
                 </li>
+                <?php 
+                    if(isset($_SESSION['doctor'])){
+                ?>
+                      <li class="nav-item">
+                      <a class="nav-link" href="Appointments.php">My appointments</a>
+                      </li>
+                <?php 
+                    }
+                ?>
+
                 <li class="nav-item">
                   <a class="nav-link" href="#">FAQ</a>
                 </li>
