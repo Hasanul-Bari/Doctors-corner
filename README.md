@@ -1,2 +1,1 @@
-# WEB-PROJECT
-Test2
+# A web application for online appointments with doctors
